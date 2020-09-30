@@ -15,5 +15,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITH_TOKEN }}
           registry: docker.pkg.github.com
-          repository: dmk1111/puppeteer
+          repository: dmk1111/puppeteer/latest
           tag_with_ref: true
