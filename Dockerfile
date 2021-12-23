@@ -3,12 +3,16 @@
 # Initially based upon:
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 
-FROM node:16.13.1-buster-slim@sha256:95ac258b85c9173e1ea3948cc5ac69471342aa2562701fd75ce35acaa5ce4754
+FROM node:16.13.1-buster-slim
 
+ENV CHROME_VERSION "google-chrome-stable"
+RUN sed -i -- 's&deb http://deb.debian.org/debian jessie-updates main&#deb http://deb.debian.org/debian jessie-updates main&g' /etc/apt/sources.list \
+  && apt-get update && apt-get install wget -y
+ENV CHROME_VERSION "google-chrome-stable"
 RUN  apt-get update \
      && apt-get install -y git \
      && apt-get update \
-     && apt-get install -y libxss1 wget gnupg ca-certificates \
+     && apt-get install -y libxss1 gnupg ca-certificates \
      && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
      && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
      && apt-get update \
@@ -23,5 +27,5 @@ RUN  apt-get update \
      && chmod +x /usr/sbin/wait-for-it.sh
 
 # Install Puppeteer under /node_modules so it's available system-wide
-ADD package.json package-lock.json /
-RUN npm install
+ADD package.json package-lock.json yarn.lock /
+RUN yarn install
