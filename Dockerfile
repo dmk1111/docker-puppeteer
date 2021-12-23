@@ -3,7 +3,7 @@
 # Initially based upon:
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 
-FROM node:14.15.5-buster-slim@sha256:6b726a194de1f4fc0a166e0d140a29d5dec1ce83367c6c7453e411ab2058e639
+FROM node:14.18.2-buster-slim@sha256:20bedf0c09de887379e59a41c04284974f5fb529cf0e13aab613473ce298da3d
 
 RUN  apt-get update \
      && apt-get install -y git \
